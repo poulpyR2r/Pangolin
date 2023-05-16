@@ -1,0 +1,30 @@
+<div class="container is-fluid mt-6">
+    <div class="container is-fluid">
+        <div class="title">{{currentPangolinUsername}} !</div>
+    </div>
+   <div class="container is-fluid mt-4">
+    <p>Votre rôle actuel est : <strong>{{currentPangolinRole}}</strong></p>
+    <div>
+        <h3>Changer de rôle :</h3>
+        <div class="select mt-2">
+            <select [(ngModel)]="currentPangolinRole" (ngModelChange)="changeRole($event)">
+                <option value="Guerrier">Guerrier</option>
+                <option value="Alchimiste">Alchimiste</option>
+                <option value="Sorcier">Sorcier</option>
+                <option value="Espions">Espions</option>
+                <option value="Enchanteur">Enchanteur</option>
+              </select>
+        </div>
+        
+      </div>
+      <div class=" mt-4">
+        <div class="button" routerLink="/home">Valider</div>
+      </div>
+      
+
+   </div>
+   
+
+
+</div>
+  

@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSubmit()" class="container is-fluid">
+    <div class="box">
+        <div>
+            <label for="email">Nom:</label>
+            <input type="email" id="email" name="email" class="input" [(ngModel)]="user.username" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="input" [(ngModel)]="user.email" required>
+        </div>
+        <div class="">
+            <label for="role">Rôle :</label>
+            <select name="role" id="role" [(ngModel)] ="user.role" required>
+                <option value="">Sélectionner un rôle</option>
+                <option value="Guerrier">Guerrier</option>
+                <option value="Alchimiste">Alchimiste</option>
+                <option value="Sorcier">Sorcier</option>
+                <option value="Espions">Espions</option>
+                <option value="Enchanteur">Enchanteur</option>
+            </select>
+        </div>
+        <div>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" class="input" [(ngModel)]="user.password" required>
+        </div>
+       
+        <button type="submit">S'inscrire</button>
+    </div>
+</form>
+<div>{{ message }}</div>

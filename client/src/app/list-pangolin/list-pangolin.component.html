@@ -1,0 +1,19 @@
+<div class="container mt-4">
+<div class="container is-flex is-justify-content-space-between">
+    <div class="title">Bonjour {{currentPangolinUsername}}</div>
+    <div class="button" routerLink="/role">Changer de role</div>
+    <a routerLink="">Déconnexion</a>
+
+</div>
+    
+    <div class="text mb-2">Voici la liste des membres :</div>
+    <div *ngFor="let pang of pangolin" class="box">
+        <p>Nom d'utilisateur: {{ pang.username }}</p>
+        <p>Rôle: {{ pang.role }}</p>
+        <p>nombres d'amis: {{ pang.friends.length }}</p>
+        <button class="button" (click)="addFriends(pang.id)">Ajouter en amis</button>
+        <button class="button" (click)="removeFriends(pang.id)">Supprimer des amis</button>
+    </div>
+</div>
+
+  
