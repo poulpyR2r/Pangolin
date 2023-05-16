@@ -10,7 +10,7 @@ const User = db.user;
 exports.changeRole = async(req, res) => {
     const {id_pangolin} = req.params;
     const { role } = req.body
-    console.log(id_pangolin)
+
  
     try {
         const updatedUser = await User.findByIdAndUpdate(id_pangolin, { role: role }, { new: true });

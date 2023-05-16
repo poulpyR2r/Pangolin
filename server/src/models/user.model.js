@@ -13,7 +13,6 @@ const User = mongoose.model(
     },
     role: {
       type: String,
-      enum: ["Guerrier", "Alchimiste", "Sorcier", "Espions", "Enchanteur"],
       default: "Guerrier",
     },
     password: { type: String, required: true },

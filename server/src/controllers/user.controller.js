@@ -41,7 +41,6 @@ exports.register = async (req, res) => {
     user.save();
     res.status(200).json({ message: "Bienvenue à toi jeune Pangolin." });
   } catch (error) {
-    // console.log(error);
     res.status(500).json({
       message: "Une erreur est survenue lors de l'inscription.",
       error,
@@ -69,7 +68,7 @@ exports.login = async (req, res) => {
         .json({ message: "Mot de passe et/ou nom d'utilisateur incorrect." });
     }
 
-    const token = jwt.sign({ _id: user._id , username: user.username}, "secret", { expiresIn: "1h" });
+    const token = jwt.sign({ _id: user._id , username: user.username, role: user.role}, "secret", { expiresIn: "1h" });
     res.status(200).json({ message: "Connexion réussie.", token });
   } catch (error) {
     // console.error(error);
@@ -96,11 +95,8 @@ exports.logout = async (req, res) => {
 exports.GetDetailsPangolin = async (req, res) => {
   const { id_pangolin } = req.params;
 
-  // console.log(id_pangolin);
-
   try {
     const user = await User.findById(id_pangolin);
-    // console.log(user.role);
 
     if (!user) {
       res.status(404).json({ message: "Le Pangolin n'a pas était trouvé" });

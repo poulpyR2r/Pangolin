@@ -9,7 +9,7 @@ const {
   UpdateDetailsPangolin,
   GetAllPangolin,
   
-} = require("../controllers/user.controllers");
+} = require("../controllers/user.controller");
 const { verifyToken } = require("../middlewares/verifyToken");
 const { changeRole } = require("../controllers/role.controller")
 
@@ -23,6 +23,6 @@ router.get("/pangolin", verifyToken, GetAllPangolin);
 
 router.patch("/pangolin/:id_pangolin", verifyToken, UpdateDetailsPangolin);
 
-router.patch("/pangolin/:id_pangolin/role",verifyToken , changeRole);
+router.patch("/pangolin/:id_pangolin/role", verifyToken , changeRole);
 
 module.exports = router;

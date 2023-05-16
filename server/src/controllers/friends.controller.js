@@ -8,14 +8,11 @@ const User = db.user;
 exports.AddFriends = async (req, res) => {
   const { id_pangolin, id_friend } = req.params;
 
-  console.log("demandeur " + id_pangolin);
-  console.log("reception " + id_friend);
 
   try {
     //on vient chercher l'id du pangolin ami
     const friend = await User.findById(id_friend);
 
-    console.log("ici reception" + friend);
 
     if (!friend) {
       return res.status(404).json({ message: " pangolin reception not found" });
@@ -43,14 +40,11 @@ exports.AddFriends = async (req, res) => {
 exports.RemoveFriends = async (req, res) => {
   const { id_friend, id_pangolin } = req.params;
 
-  console.log("demandeur " + id_pangolin);
-  console.log("reception " + id_friend);
 
   try {
     //on vient chercher l'id du pangolin ami
     const friend = await User.findById(id_friend);
 
-    console.log("ici reception" + friend);
 
     if (!friend) {
       return res.status(404).json({ message: " pangolin reception not found" });
