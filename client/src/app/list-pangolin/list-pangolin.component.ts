@@ -42,7 +42,6 @@ export class ListPangolinComponent implements OnInit {
     })
     .then(response => {
       this.pangolin = response.data.filter((pang: any) => pang.username !== this.currentPangolinUsername);
-      console.log(this.pangolin);
     })
     .catch(err => {
       console.error(err);
@@ -51,10 +50,8 @@ export class ListPangolinComponent implements OnInit {
 
 
   addFriends(friendId: string) {
-    console.log(friendId);
     axios.patch(`http://localhost:3000/add-friend/${this.currentPangolinId}/${friendId}`)
     .then(response => {
-      console.log(response.data);
       this.getPangolins()
     })
     .catch(err => {
@@ -66,7 +63,6 @@ export class ListPangolinComponent implements OnInit {
   removeFriends(friendId: string) {
     axios.patch(`http://localhost:3000/remove-friend/${this.currentPangolinId}/${friendId}`)
     .then(response => {
-      console.log(response.data)
       this.getPangolins()
     })
     .catch(err => {

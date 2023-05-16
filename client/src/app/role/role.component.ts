@@ -38,7 +38,6 @@ export class RoleComponent implements OnInit{
       }
     })
     .then(response => {
-      console.log(response.data);
       this.currentPangolinRole = newRole;
     })
     .catch(err => {
