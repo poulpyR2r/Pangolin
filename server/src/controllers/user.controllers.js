@@ -14,6 +14,7 @@ exports.GetAllPangolin = async (req, res) => {
     }
 
     const pangolin = response.map((pangolin) => ({
+      id : pangolin._id,
       username: pangolin.username,
       role: pangolin.role,
       friends: pangolin.friends,
@@ -28,8 +29,9 @@ exports.GetAllPangolin = async (req, res) => {
 exports.register = async (req, res) => {
   const { username, email, password, role } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10); //hash du mot de passe
-
+  
   try {
+
     const user = await new User({
       username: username,
       email: email,
@@ -67,7 +69,7 @@ exports.login = async (req, res) => {
         .json({ message: "Mot de passe et/ou nom d'utilisateur incorrect." });
     }
 
-    const token = jwt.sign({ _id: user._id }, "secret", { expiresIn: "1h" });
+    const token = jwt.sign({ _id: user._id , username: user.username}, "secret", { expiresIn: "1h" });
     res.status(200).json({ message: "Connexion réussie.", token });
   } catch (error) {
     // console.error(error);
