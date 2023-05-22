@@ -10,9 +10,10 @@ import jwt_decode from "jwt-decode";
 export class ListPangolinComponent implements OnInit {
 
   pangolin: any[] = [];
+  friendNames: string[] = [];
   currentPangolinId: string = '';
   currentPangolinUsername: string = '';
-
+  currentPangolinFriends : string[] = [];
   constructor() {}
 
   ngOnInit(): void {
@@ -31,6 +32,8 @@ export class ListPangolinComponent implements OnInit {
       const decodedToken: any = jwt_decode(token);
       this.currentPangolinId = decodedToken._id;
       this.currentPangolinUsername = decodedToken.username;
+      this.currentPangolinFriends = decodedToken.friends;
+      this.getDetailsFriends();
     }
   }
 
@@ -48,11 +51,32 @@ export class ListPangolinComponent implements OnInit {
     })
   }
 
+getDetailsFriends() {
+  const promises = this.currentPangolinFriends.map(friendId => 
+    axios
+      .get(`http://localhost:3000/get-friend/${friendId}`)
+      .then((response) => {
+        const friendDetails = response.data;
+        console.log(friendDetails); // Keep this line for debugging
+        return friendDetails.name; 
+      })
+  );
 
+  Promise.all(promises)
+    .then(friendNames => {
+      this.friendNames = friendNames;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+  
   addFriends(friendId: string) {
     axios.patch(`http://localhost:3000/add-friend/${this.currentPangolinId}/${friendId}`)
     .then(response => {
       this.getPangolins()
+      
     })
     .catch(err => {
       console.error(err);

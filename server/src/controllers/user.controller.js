@@ -25,6 +25,8 @@ exports.GetAllPangolin = async (req, res) => {
   }
 };
 
+
+
 //création du controller register
 exports.register = async (req, res) => {
   const { username, email, password, role } = req.body;
@@ -68,7 +70,8 @@ exports.login = async (req, res) => {
         .json({ message: "Mot de passe et/ou nom d'utilisateur incorrect." });
     }
 
-    const token = jwt.sign({ _id: user._id , username: user.username, role: user.role}, "secret", { expiresIn: "1h" });
+    const token = jwt.sign({ _id: user._id , username: user.username, role: user.role, friends : user.friends}, "secret", { expiresIn: "1h" });
+    console.log(user.friends)
     res.status(200).json({ message: "Connexion réussie.", token });
   } catch (error) {
     // console.error(error);
@@ -91,6 +94,8 @@ exports.logout = async (req, res) => {
     });
   }
 };
+
+
 //controller qui récupere les details du pangolin
 exports.GetDetailsPangolin = async (req, res) => {
   const { id_pangolin } = req.params;
@@ -104,6 +109,26 @@ exports.GetDetailsPangolin = async (req, res) => {
 
     res.status(200).json({
       role: user.role,
+      nbrm_friends : user.friends 
+    });
+  } catch (err) {
+    res.status(500).json({ message: "erreur est survenue" });
+  }
+};
+
+
+exports.GetDetailsFriends = async (req, res) => {
+  const { id_friend } = req.params;
+
+  try {
+    const user = await User.findById(id_friend);
+
+    if (!user) {
+      res.status(404).json({ message: "Le Pangolin n'a pas était trouvé" });
+    }
+
+    res.status(200).json({
+      name: user.username,
     });
   } catch (err) {
     res.status(500).json({ message: "erreur est survenue" });

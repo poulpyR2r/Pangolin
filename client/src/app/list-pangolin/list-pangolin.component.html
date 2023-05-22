@@ -1,9 +1,17 @@
 <div class="container mt-4">
 <div class="container is-flex is-justify-content-space-between">
-    <div class="title">Bonjour à toi petit Pangolin {{currentPangolinUsername}}</div>
+    <div class="title">Bonjour à toi , {{currentPangolinUsername}}</div>
     <div class="button" routerLink="/role">Changer de role</div>
     <a routerLink="">Déconnexion</a>
-
+    <div class=""> vos amis : </div>
+    <div class= "is-flex is-flex-direction-column">
+        <div *ngFor="let friendName of friendNames" >
+            {{ friendName }}
+         </div>
+    </div>
+    
+      
+    
 </div>
     
     <div class="text mb-2">Voici la liste des membres :</div>
