@@ -4,10 +4,11 @@
     <div class="button" routerLink="/role">Changer de role</div>
     <a routerLink="">Déconnexion</a>
     <div class=""> vos amis : </div>
-    <div *ngFor="let friendName of userFriends">
+    <div class="is-flex is-flex-direction-column">
+        <div *ngFor="let friendName of userFriends">
         {{ friendName }}
       </div>
-      
+    </div>
     <div class="div"><h2>Rôle de l'utilisateur : {{ userRole }}</h2></div>
     
       

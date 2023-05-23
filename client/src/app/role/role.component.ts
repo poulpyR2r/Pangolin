@@ -12,7 +12,7 @@ export class RoleComponent implements OnInit {
   currentPangolinId: string = '';
   currentPangolinUsername: string = '';
   currentPangolinRole: string = '';
-  currentPangolinFriends: string = '';
+
 
   constructor() {}
 
@@ -27,17 +27,11 @@ export class RoleComponent implements OnInit {
       this.currentPangolinId = decodedToken._id;
       this.currentPangolinUsername = decodedToken.username;
       this.currentPangolinRole = decodedToken.role;
-      this.currentPangolinFriends = decodedToken.friends;
+   
     }
   }
 
-  getDetailsFriends() {
-    axios
-      .get(`http://localhost:3000/get-friend/${this.currentPangolinFriends}`)
-      .then((response) => {
 
-      });
-  }
 
   changeRole(newRole: string) {
     axios
