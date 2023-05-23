@@ -135,6 +135,49 @@ exports.GetDetailsFriends = async (req, res) => {
   }
 };
 
+
+exports.getFriendsByUserId = async (req, res) => {
+  const { id_pangolin } = req.params;
+
+  try {
+    const user = await User.findById(id_pangolin);
+
+    if (!user) {
+      return res.status(404).json({ message: "Pangolin non trouvé." });
+    }
+
+    const friends = await Promise.all(
+      user.friends.map(async friendId => {
+        const friend = await User.findById(friendId);
+        return friend ? friend.username : null;
+      })
+    );
+
+    res.status(200).json(friends);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur : " + error.message });
+  }
+};
+
+
+exports.getUserRoleById = async (req, res) => {
+  const { id_pangolin } = req.params;
+
+  try {
+    const user = await User.findById(id_pangolin);
+
+    if (!user) {
+      return res.status(404).json({ message: "Pangolin non trouvé." });
+    }
+
+    res.status(200).json({ role: user.role });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur : " + error.message });
+  }
+};
+
+
+
 //controller update details du pangolin
 exports.UpdateDetailsPangolin = async (req, res, next) => {
   const { role } = req.body;

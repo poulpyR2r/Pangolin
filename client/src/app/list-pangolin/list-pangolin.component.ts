@@ -9,20 +9,24 @@ import jwt_decode from "jwt-decode";
 })
 export class ListPangolinComponent implements OnInit {
 
+
+  userRole: string = ''; 
+  userFriends: any[] = [];
   pangolin: any[] = [];
-  friendNames: string[] = [];
   currentPangolinId: string = '';
   currentPangolinUsername: string = '';
-  currentPangolinFriends : string[] = [];
+
   constructor() {}
 
   ngOnInit(): void {
     this.getCurrentPangolinId();
     this.getPangolins();
+    this.getUserRole();
+    this.getUserFriends();
     
   }
 
- 
+
 
   
 
@@ -32,10 +36,35 @@ export class ListPangolinComponent implements OnInit {
       const decodedToken: any = jwt_decode(token);
       this.currentPangolinId = decodedToken._id;
       this.currentPangolinUsername = decodedToken.username;
-      this.currentPangolinFriends = decodedToken.friends;
-      this.getDetailsFriends();
+ 
+    
     }
   }
+
+  getUserFriends() {
+    axios.get(`http://localhost:3000/pangolin/friends/${this.currentPangolinId}`)
+      .then(response => {
+        this.userFriends = response.data; 
+        console.log(this.userFriends)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+  
+
+  getUserRole() {
+    axios.get(`http://localhost:3000/pangolin/role/${this.currentPangolinId}`)
+    .then(response => {
+      this.userRole = response.data.role;
+      console.log(this.userRole);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+
+
 
   getPangolins() {
     axios.get('http://localhost:3000/pangolin', {
@@ -45,37 +74,23 @@ export class ListPangolinComponent implements OnInit {
     })
     .then(response => {
       this.pangolin = response.data.filter((pang: any) => pang.username !== this.currentPangolinUsername);
+      
     })
     .catch(err => {
       console.error(err);
     })
   }
 
-getDetailsFriends() {
-  const promises = this.currentPangolinFriends.map(friendId => 
-    axios
-      .get(`http://localhost:3000/get-friend/${friendId}`)
-      .then((response) => {
-        const friendDetails = response.data;
-        console.log(friendDetails); // Keep this line for debugging
-        return friendDetails.name; 
-      })
-  );
 
-  Promise.all(promises)
-    .then(friendNames => {
-      this.friendNames = friendNames;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
+
+
 
   
   addFriends(friendId: string) {
     axios.patch(`http://localhost:3000/add-friend/${this.currentPangolinId}/${friendId}`)
     .then(response => {
       this.getPangolins()
+      this.getUserFriends();
       
     })
     .catch(err => {
@@ -88,6 +103,8 @@ getDetailsFriends() {
     axios.patch(`http://localhost:3000/remove-friend/${this.currentPangolinId}/${friendId}`)
     .then(response => {
       this.getPangolins()
+    this.getUserFriends();
+      
     })
     .catch(err => {
       console.error(err)
